@@ -19,7 +19,7 @@ db.once('open', function() {
 })
 
 mongoose.set('useCreateIndex', true);
-// var mongodUri = `mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds119606.mlab.com:19606/profile`
+// var mongodUri = `mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds045511.mlab.com:45511/gigel`
 // mongoose.connect(mongodUri, {
 //     useNewUrlParser: true
 // }), 

@@ -51,12 +51,12 @@ userSchema.post("validate", doc => {
 userSchema.path('email').validate(async (value) => {
   const emailCount = await mongoose.models.User.countDocuments({email: value });
   return !emailCount;
-}, 'Email already exists');
+}, 'Email already existed, use another email');
 
 userSchema.path('phoneNumber').validate(async (value) => {
   const phoneNoCount = await mongoose.models.User.countDocuments({phoneNumber: value });
   return !phoneNoCount;
-}, 'Phone number already exists');
+}, 'Phone number already existed, use another phone number');
 
 userSchema.post("save", function(user) {
   generatePassword(this.email, this.password).then(function(newPassword) {

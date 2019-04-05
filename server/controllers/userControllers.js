@@ -96,11 +96,12 @@ module.exports = {
 },
 
 register: function(req, res) {
+  console.log(`req body email `, req.body.email);
   let validateEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!validateEmail.test(String(req.body.email).toLowerCase())) {
     console.log(`======= 1`);
       res.status(400).json({
-          emailFormat: `Please use correct email format`
+          message: `Please use correct email format`
       })
   } else if (validateEmail.test(String(req.body.email).toLowerCase())) {
     console.log(`======= 2`);
@@ -125,6 +126,7 @@ register: function(req, res) {
         console.log(`======= 4`);
           res.status(500).json({
           err,
+          message: `registration failed`
           });
       });
     } 
@@ -135,8 +137,12 @@ register: function(req, res) {
     console.log(`headers id `, req.data.userId);
     User.updateOne(
       { _id : req.data.userId},
-      { score : req.body.score },
-      { runValidators: true }
+      { 
+        name: req.body.name,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        password: req.body.password,
+    },
     )
     .then((user) => {
       res.status(201).json({
@@ -145,9 +151,9 @@ register: function(req, res) {
       })
     })
     .catch((err) => {
-      res.status(500).json({
+      res.status(400).json({
         err,
-        message: `update user score failed`
+        message: `update account failed`
       })
     })
   },
