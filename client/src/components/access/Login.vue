@@ -41,8 +41,8 @@
             <label for="registeremail" class="label">Email</label>
             <input id="registeremail" type="text" class="input" v-model="userRegister.email">
             <p class="noting">{{ messageEmail }}</p>
-            <p>{{ tes }}</p>
-            <p class="noting">bacot</p>
+            <!-- <p>{{ tes }}</p> -->
+            <!-- <p class="noting">Hai</p> -->
           </div>
           <div class="group">
             <label for="registerPhone" class="label">Phone Number</label>
