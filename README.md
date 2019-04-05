@@ -4,7 +4,34 @@ This is an app with login feature for gigel test, just npm install to use it. da
 <br>
 Using Javascript language
 
+* **How to run** 
 
+  `Properties`
+
+  User that already registered can login by using email and password
+  <br>
+  <br>
+  Email:
+  - Email must be unique
+  <br>
+
+  Phone Number:
+  - Number must be unique
+  - Minimum length 10 character
+  <br>
+
+  Password:
+  - Miminum length 8 character
+  - every password written will encrypt and will be added hash into it, so none knows your password except you and God
+
+  `FLOWS`
+
+  after logged in, server only give jwt token and userId to client.
+  <br>
+  Token will be used to notice if user logged in or not
+  <br> 
+  userId will be used to give user that already logged in to pass the access of his own data only
+  
 * **URL**
 
   <http://localhost:3000>
@@ -61,7 +88,6 @@ ___
   using MVC method
   <br>
   have user endpoint
-  
   <br>
   <br>
   ___
