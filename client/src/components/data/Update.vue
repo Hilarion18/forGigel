@@ -9,13 +9,15 @@
           <div class="writing">
             <div class="text-left" >
               <blockquote>
-                <h3>Name: {{ userProfile.name }}</h3>
+                <p>Name: <input type="text" v-model="userProfile.name"></p>
                 <!-- <small><cite title="Source Title">Chicago, United States of America  <i class="icon-map-marker"></i></cite></small> -->
               </blockquote>
-              <p href="">Email: {{ userProfile.email }} </p>
-              <p href="">Phone Number: {{ userProfile.phoneNumber }}</p>
-              <p href=""> Password: *********</p> <br>
-              <button class="button4"><router-link to="/update">Edit</router-link></button>
+              <p href="">Email: <input type="text" v-model="userProfile.email"></p>
+              <p href="">Phone Number: <input type="text" v-model="userProfile.phoneNumber"></p>
+              <p href=""> Password: <input type="text" v-model="userProfile.password"></p> <br>
+              <!-- <button class="button4" @click="update()"><router-link to="/">Update</router-link></button> -->
+              <button class="button4" @click="update()"><a href="/">Update</a></button>
+              <button class="button4"><router-link to="/">Cancel</router-link></button>
             </div>
           </div>
         </div>
@@ -31,14 +33,25 @@ import config from '@/config.js'
 export default {
   data () {
     return {
-      userProfile: []
+      userProfile: {
+        name: '',
+        email: '',
+        phoneNumber: '',
+        password: ''
+      }
     }
   },
   methods: {
-    getUserProfile: function () {
+    update: function () {
       axios({
-        method: 'GET',
-        url: `${config.port}/user/profile`,
+        method: 'PUT',
+        url: `${config.port}/user`,
+        data: {
+          name: this.userProfile.name,
+          email: this.userProfile.email,
+          phoneNumber: this.userProfile.phoneNumber,
+          password: this.userProfile.password
+        },
         headers: {
           // id: localStorage.get('userId'),
           token: localStorage.getItem('token')
@@ -47,9 +60,9 @@ export default {
         .then((profile) => {
           this.userProfile = profile.data
           console.log(`ini get profile`, this.userProfile)
-          console.log(`===== ini get profile`, profile)
+          console.log(`===== ini update profile`, profile)
           console.log(`todo list has been found`)
-          this.$emit(`sendUserProfile`, this.userProfile)
+          this.$emit(`sendUserUpdate`, this.userProfile)
         })
         .catch(err => {
           console.log(`userProfile err `, err)
@@ -59,7 +72,6 @@ export default {
     }
   },
   created () {
-    this.getUserProfile()
   }
 }
 </script>
@@ -82,6 +94,7 @@ button {
 .writing {
   color: white;
   padding: 10px;
-  background-color: rgb(80, 35, 196, 40%);
+  background-color: rgb(80, 35, 196);
+  opacity: 90%;
 }
 </style>

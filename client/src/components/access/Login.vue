@@ -1,6 +1,19 @@
 <template>
   <div class="login-wrap">
     <div class="login-html">
+      <div v-if="failedAccess === true">
+        <div class="text-right">
+        </div>
+      </div>
+          <!-- <a class="nortification animateOpen">
+            <p>{{ messageEmail }}</p>
+            <p>{{ messagePhoneNumber }}</p>
+            <p>{{ messagePassword }}</p>
+            <p>{{ errMessage }}</p>
+            <div v-if="correctEmail !== null">
+              <p style="text-decoration: underline">{{ correctEmail }}</p> 
+            </div>
+          </a> -->
       <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab" style="color: rgba(71, 230, 241, 0.945)">Sign In</label>
       <input id="tab-2" type="radio" name="tab" class="for-pwd"><label for="tab-2" class="tab" style="color: rgba(71, 230, 241, 0.945)">Sign Up</label>
       <div class="login-form">
@@ -8,6 +21,7 @@
           <div class="group">
             <label for="loginEmail" class="label">Email</label>
             <input id="loginEmail" type="text" class="input" v-model="userLogin.email">
+            <p>{{ messageEmail }}</p>
           </div>
           <div class="group">
             <label for="loginPass" class="label">login</label>
@@ -20,20 +34,25 @@
         </div>
         <div class="for-pwd-htm">
           <div class="group">
-            <label for="registeremail" class="label">Email</label>
-            <input id="registeremail" type="text" class="input" v-model="userRegister.email">
-          </div>
-          <div class="group">
             <label for="registerName" class="label">Name</label>
             <input id="registerName" type="text" class="input" v-model="userRegister.name">
           </div>
           <div class="group">
+            <label for="registeremail" class="label">Email</label>
+            <input id="registeremail" type="text" class="input" v-model="userRegister.email">
+            <p class="noting">{{ messageEmail }}</p>
+            <p>{{ tes }}</p>
+            <p class="noting">bacot</p>
+          </div>
+          <div class="group">
             <label for="registerPhone" class="label">Phone Number</label>
             <input id="registerPhone" type="text" class="input" v-model="userRegister.phoneNumber">
+            <p class="noting">{{ messagePhoneNumber }}</p>
           </div>
           <div class="group">
             <label for="registerPass" class="label">Password</label>
             <input id="registerPass" type="password" class="input" data-type="password" v-model="userRegister.password">
+            <p class="noting">{{ messagePassword }}</p>
           </div>
           <div class="group">
             <input @click="register" type="submit" class="button" value="Sign Up">
@@ -61,7 +80,15 @@ export default {
         email: '',
         password: ''
       },
-      isLogin: false
+      userProfile: [],
+      isLogin: false,
+      correctEmail: '',
+      messagePassword: '',
+      messagePhoneNumber: '',
+      messageEmail: '',
+      failedAccess: false,
+      errMessage: '',
+      tes: ''
     }
   },
   methods: {
@@ -108,8 +135,29 @@ export default {
           this.$emit('sendUserRegister', this.userRegister)
         })
         .catch((err) => {
-          console.log(`Registration failed `, err)
+          this.failedAccess = true
+          // console.log(`Registration failed `, err.response)
+          console.log(`Registration failed data`, err.response.data)
+          // console.log(`Registration failed data err`, err.response.data.err)
+          // console.log(`Registration failed data err errors`, err.response.data.err.errors)
+          // console.log(`Registration failed data err errors password`, err.response.data.err.errors.password)
+          console.log(`Registration failed data err errors password message`, err.response.data.err.errors.password.message)
+          console.log(`Registration failed data err errors phoneNumber message`, err.response.data.err.errors.phoneNumber.message)
+          console.log(`Registration failed data err errors email message`, err.response.data.err.errors.email.message)
+          // console.log(`Correct email `, err.response.data.message)
+          this.tes = err.response.data.err.errors
+          this.messageEmail = err.response.data.err.errors.email.message
+          this.messagePhoneNumber = err.response.data.err.errors.phoneNumber.message
+          this.messagePassword = err.response.data.err.errors.password.message
+          this.errMessage = err.response.data.message
+          this.registerFailed()
+          this.correctEmail = err.response.data.message
         })
+    },
+    registerFailed: function () {
+      alert(this.messageEmail)
+      alert(this.messagePhoneNumber)
+      alert(this.messagePassword)
     }
   },
   created () {
@@ -120,6 +168,9 @@ export default {
 </script>
 
 <style scope>
+.noting {
+  color: white;
+}
 .login-wrap{
 width: 100%;
 margin:auto;
@@ -271,5 +322,45 @@ background:#1161ee;
 }
 .foot-lnk{
   text-align:center;
+}
+
+.ctrl{
+	width:100%;
+  position:relative;
+}
+
+.nortification{
+	display:block;
+	font-size:14px;
+	width:180px;
+	padding:5px 0;
+	position:absolute;
+  top:0;
+  left:50%;
+  margin: -135px 0px 0px -90px;
+  box-sizing:border-box;
+  border-radius:15px;
+  background-color:#fff;
+  color:#3a9ab9;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+}
+
+.animateOpen{
+	-webkit-animation:moveOpen 4s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-fill-mode: forwards;
+}
+/* Safari and Chrome */
+@-webkit-keyframes moveOpen 
+	{
+  from {-webkit-transform: translate(0,-100px);}
+  10% {-webkit-transform: translate(0,20px);}
+  12% {-webkit-transform: translate(0,22px);}
+  16% {-webkit-transform: translate(0,20px);}
+  80% {-webkit-transform: translate(0,20px);}
+  85% {-webkit-transform: translate(0,25px);}
+  to {-webkit-transform: translate(0,-100px);}
 }
 </style>
