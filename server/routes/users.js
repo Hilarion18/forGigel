@@ -4,10 +4,6 @@ var {findAll, login, register, userProfile, update} = require('../controllers/us
 var isLogin = require('../middleware/isLogin')
 // var isUser = require('../middleware/isUser')
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
 router.get('/', findAll)
 router.get('/profile', isLogin, userProfile)
 router.post('/register', register)
