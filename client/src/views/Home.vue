@@ -50,13 +50,10 @@ export default {
       })
         .then((profile) => {
           this.userProfile = profile.data
-          console.log(`ini get profile`, this.userProfile)
-          console.log(`===== ini get profile`, profile)
-          console.log(`====== ini ========`)
+          console.log(`getUserData success`, this.userProfile)
         })
         .catch(err => {
           console.log(`userProfile err `, err)
-          console.log(`error to get todo lists`)
         })
     },
     todoLogout (val) {
@@ -69,8 +66,8 @@ export default {
       this.isLogin = val
     },
     statusLogin: function () {
-      console.log(`ini local storage`, localStorage)
-      console.log(`ini user profile `, this.userProfile.name)
+      // console.log(`ini local storage`, localStorage)
+      // console.log(`ini user profile `, this.userProfile.name)
       if (localStorage.getItem('token')) {
         this.isLogin = true
       } else {

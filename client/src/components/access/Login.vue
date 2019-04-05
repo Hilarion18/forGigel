@@ -102,7 +102,7 @@ export default {
         }
       })
         .then((response) => {
-          console.log(`Login successed `, JSON.stringify(response))
+          // console.log(`Login successed `, JSON.stringify(response))
           localStorage.setItem('userId', response.data.id)
           localStorage.setItem('token', response.data.token)
           this.isLogin = true
@@ -127,7 +127,6 @@ export default {
         .then((response) => {
           this.responseRegister = response
           console.log(`this is response `, JSON.stringify(response.data.token))
-          console.log(`Registered successed`)
           localStorage.setItem('userId', response.data.id)
           localStorage.setItem('token', response.data.token)
           this.isLogin = true
@@ -137,9 +136,7 @@ export default {
         .catch((err) => {
           this.failedAccess = true
           // console.log(`Registration failed `, err.response)
-          console.log(`Registration failed data`, err.response.data)
-          // console.log(`Registration failed data err`, err.response.data.err)
-          // console.log(`Registration failed data err errors`, err.response.data.err.errors)
+          // console.log(`Registration failed data`, err.response.data)
           // console.log(`Registration failed data err errors password`, err.response.data.err.errors.password)
           console.log(`Registration failed data err errors password message`, err.response.data.err.errors.password.message)
           console.log(`Registration failed data err errors phoneNumber message`, err.response.data.err.errors.phoneNumber.message)

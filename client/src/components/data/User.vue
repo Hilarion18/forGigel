@@ -35,27 +35,23 @@ export default {
     }
   },
   methods: {
-    getUserProfile: function () {
-      axios({
-        method: 'GET',
-        url: `${config.port}/user/profile`,
-        headers: {
-          // id: localStorage.get('userId'),
-          token: localStorage.getItem('token')
-        }
+  getUserProfile: function () {
+    axios({
+      method: 'GET',
+      url: `${config.port}/user/profile`,
+      headers: {
+        // id: localStorage.get('userId'),
+        token: localStorage.getItem('token')
+      }
+    })
+      .then((profile) => {
+        this.userProfile = profile.data
+        // console.log(`ini get profile`, this.userProfile)
+        this.$emit(`sendUserProfile`, this.userProfile)
       })
-        .then((profile) => {
-          this.userProfile = profile.data
-          console.log(`ini get profile`, this.userProfile)
-          console.log(`===== ini get profile`, profile)
-          console.log(`todo list has been found`)
-          this.$emit(`sendUserProfile`, this.userProfile)
-        })
-        .catch(err => {
-          console.log(`userProfile err `, err)
-          console.log(err)
-          console.log(`error to get todo lists`)
-        })
+      .catch(err => {
+        console.log(`userProfile err `, err)
+      })
     }
   },
   created () {
